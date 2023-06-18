@@ -190,7 +190,7 @@ function showSolutions(data) {
     // The solution is shown within a <h3> and converted 
     // to a string with commas to help with readability 
     $('#solution').html(`
-        <h3>${data.toLocaleString('en-US')}</h3>
+        <h2>${data.toLocaleString('en-US')}</h2>
     `)
 
     // ? Experimenting with combining append to render function
@@ -221,7 +221,7 @@ function listOfCalculations(array) {
                 // The last value ${calculation.calculateAnswer} is
                 // converted to a string with commas to help with readability 
         $('#list-of-calculations').append(`
-            <li>${calculation.firstValue} ${calculation.operator} ${calculation.secondValue} = ${calculation.calculateAnswer.toLocaleString('en-US')}</li>
+            <h3><li>${calculation.firstValue} ${calculation.operator} ${calculation.secondValue} = ${calculation.calculateAnswer.toLocaleString('en-US')}</li></h3>
         `)
         // more calculations are added, - one after the other - with each user interaction
 

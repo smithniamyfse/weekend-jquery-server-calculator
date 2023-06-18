@@ -4,15 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Ubuntu:wght@300&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/digital-numbers" rel="stylesheet">
     <script src="vendors/jquery.js"></script>
     <script src="scripts/client.js"></script>
+    <link href="styles/style.css" rel="stylesheet">
     <title>Server Side Calculator</title>
 </head>
 
 <body>
-    <h1>Server Side Calculator</h1>
+    <h1 class="calculator-font">Server Side Calculator</h1>
 
-<div id="calculator-container">
+    <div id="calculator-container">
         <input type="number" id="first-value">
         <button id="add-button" class="operator-button">+</button>
         <button id="subtract-button" class="operator-button">-</button>
@@ -20,16 +26,20 @@
         <button id="divider-button" class="operator-button">/</button>
         <input type="number" id="second-value">
         <button id="equals-button" class="operator-button">=</button>
-        <button type="reset" value="reset" id="clear-button">C</button>
-</div>
+        <button type="reset" value="reset" class="operator-button">C</button>
+    </div>
 
     <div id="solutions-container">
-        <div id="solution">
+        <h2 class="calculator-font">Answer:</h2>
+        <div id="solution" class="output-values">
             <!-- Solutions to math problems will show here -->
         </div>
     </div>
+</br>
+    </div>
     <div id="calculations-container">
-        <div id="list-of-calculations">
+        <h3 class="calculator-font">History of Calculations</h3>
+        <div id="list-of-calculations" class="output-values">
             <!-- Calculations will show in an unordered list here -->
         </div>
     </div>

@@ -1,0 +1,24 @@
+input[type=number] {
+    font-family: 'Rock Salt', cursive;
+    font-family: 'Ubuntu', sans-serif; 
+    font-size: x-large;
+    padding: 5px 10px;
+    box-sizing: border-box;
+  }
+  
+.operator-button {
+    font-family: 'Rock Salt', cursive;
+    font-family: 'Ubuntu', sans-serif; 
+    padding: 5px 32px;
+    text-align: center;
+    font-size: large;
+}
+
+.output-values {
+    font-family: 'Rock Salt', cursive;
+    font-family: 'Ubuntu', sans-serif; 
+}
+
+.calculator-font {
+    font-family: 'Digital Numbers', sans-serif;
+}
