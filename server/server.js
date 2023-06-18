@@ -38,6 +38,7 @@ app.get('/calculations', (req, res) => {
     res.send(calculations);
 })
 
+
 app.get('/answer', (req, res) => {
     res.send({ answer: answer });
 })

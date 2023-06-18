@@ -3,11 +3,11 @@
 $(document).ready(onReady);
 
 // * Global variable
-// these are not confined to certain functions and
+// Variables are not confined to specific functions and
 // can be used elsewhere in the program
 // Declared an operator value with an undefined value
-// This operator will be assigned a different value,
-// dependant upon which operator function is called
+    // This operator will be assigned a different value,
+    // dependant upon which operator function is called
 let operator;
 
 function onReady() {
@@ -63,13 +63,15 @@ function divideOperator() {
 }
 
 
+
+
 // * Function postCalculationsInputs 
 // Collects user input, sends the data to the server
 // for processing and calculating logic,
 // then, updates with calculations
 function postCalculationsInputs() {
     // TEST: postCalculationsInputs function 
-    console.log('in postCalculationsInputs function');
+    console.log('in postCalculationsInputs function: 🟢');
 
     // Grabs and stores number input values and
     // the operator into a data object
@@ -83,6 +85,7 @@ function postCalculationsInputs() {
     $.ajax({
         method: 'POST',
         // Route we will match on the server.js side - app.post('/calculate', (req, res) => {...
+            // This route is where all the calculation server-side logic is performed
         url: '/calculate',
         // The object we declared above that "grabs" and sends the user input for
         // first value, operator choice, and second value
@@ -103,61 +106,114 @@ function postCalculationsInputs() {
         // calculation response from the server
         getAnswers();
 
+        // Will display error alert window if issue with code
     }).catch(function(error){
-        alert('Error sending data from calculation.');
+        alert('❌ Error sending data from calculation.');
     })
 }
 
 
+
+
 // * Function calculationsList 
+// Retrieves the list of calculations from the server (Method: GET)
+// Updates with latest list of calculations in the array
 function calculationsList() {
     // TEST: Check calculationsList function 
-    console.log('in calculationsList function');
+    console.log('in calculationsList function: 🟢');
+
+    // AJAX GET Method: Requests data. This can be tested in the browser.
     $.ajax({
         method: 'GET',
+        // Route we will match on the server.js side - app.get('/calculations', (req, res) => {...
+            // Server-response is to send the calculations array
         url: '/calculations'
+
     }).then(function(response){
-        // will grab the history array and append it to the DOM
+        // The function listOfCalculations is called and
+        // uses the updated calculations array with
+        // the calculations and appends
         listOfCalculations(response);
+
+        // Will display error alert window if issue with code
     }).catch(function(error){
-        alert('error in getHistory function');
+        alert('❌ Error in retrieving list of calculations.');
     });
 } 
 
+
+
+// * Function getAnswers 
+// Retrieves the list of calculations from the server (Method: GET)
+// Updates with latest list of calculations in the array
 function getAnswers() {
     // TEST: getAnswers function 
-    console.log('in getAnswers function');
+    console.log('in getAnswers function:  🟢');
+
+    // AJAX GET Method: Requests data. This can be tested in the browser.
     $.ajax({
         method: 'GET',
+        // Route we will match on the server.js side - app.get('/answer', (req, res) => {...
+            // Server-response is to send the answer
         url: '/answer'
+
     }).then(function(response){
+        // the answer variable is assigned the
+        // server's response value and the answer
         answer = response.answer;
 
+        // The function showSolutions is called and
+        // uses the solution or answer
+        // and appends to 
         showSolutions(answer);
+
     }).catch(function(error){
-        alert('error in getResults function');
+        alert('❌ Error in retrieving the answer.');
     });
 } 
 
 
+
+// * Function showSolutions 
+// Receives data or the answer from the the req.body
+// being calculated through the server-side logic and
+// inserts the solution into the solution element of the DOM
 function showSolutions(data){
     // TEST: showSolutions function 
-    console.log('in showSolutions function');
+    console.log('in showSolutions function:  🟢');
+
+    // ? .html was difficult for me, I just started
+    // ? putting in different things until it worked
     $('#solution').html(`
         <h3>${data}</h3>
     `)
 } 
 
+
+// * Function listOfCalculations 
+// Updates the list of calculations
+// based on the array of calculations received from the server
 function listOfCalculations(array){
     // TEST: listOfCalculations function 
-    console.log('in listOfCalculations function')
+    console.log('in listOfCalculations function:  🟢')
 
+    // Empty clears the list of calculations element -
+    // where the calculations are shown on the browser
     $('#list-of-calculations').empty();
 
-    for(let evaluate of array){
+    // The for of loop iterates over each calculation object (toCalculate),
+    // pushed into the calculations array 
+    for(let calculation of array){
+
+        // Append - inserts content of the calculations to 
+        // list-of-calculations on DOM 
+        // Using string interpolation, it creates an ordered list
+        // of each calculation with the first value, operator type, second value, and equals the calculated answer
+        // all using data from the server-side
         $('#list-of-calculations').append(`
-            <li>${evaluate.firstValue} ${evaluate.operator} ${evaluate.secondValue} = ${evaluate.calculateAnswer}</li>
+            <li>${calculation.firstValue} ${calculation.operator} ${calculation.secondValue} = ${calculation.calculateAnswer}</li>
         `) 
+        // more calculations are added, - one after the other - with each user interaction
     }
 } 
 
