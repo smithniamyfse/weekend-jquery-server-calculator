@@ -63,6 +63,7 @@ function getCalculationInputs() {
 
 function postCalculationInputs(event) {
     console.log('In postCalculations');
+
     // Stopping default HTML of immediate form submission 
     event.preventDefault()
 
@@ -70,8 +71,34 @@ function postCalculationInputs(event) {
     numberInput1 = $('#first-value').val();
     numberInput2 = $('#second-value').val();
 
-    // AJAX POST Method: Sends data to the server 
+    // Grab operator inputs
+    add = $('#add-button').val();
+    subtract = $('#subtract-button').val();
+    multiply = $('#multiply-button').val();
+    divide = $('#divide-button').val();
 
-}
+    // AJAX POST Method: Sends data to the server 
+    $.ajax({
+        type: 'POST',
+        url: '/calculation',
+        data: { 
+            inputsToSend: {
+                firstValue: numberInput1,
+                secondValue: numberInput2,
+                operatorAdd: add,
+                operatorSubtract: subtract,
+                operatorMultiply: multiply,
+                operatorDivide: divide, 
+            }
+        }
+    }).then(function(response) {
+        // Call the get request
+        getCalculationInputs()
+    }).catch(function (error){
+        alert('Error in calculating.');
+        console.log(error);
+    }); 
+
+} // end postCalculationInputs function 
 
 

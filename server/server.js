@@ -3,6 +3,9 @@
 // Require express - gives us a function
 const express = require('express');
 
+// Bring body-parser into the project
+const bodyParser = require("body-parser");
+
 // Call express to create an Express application
 // Express is used to write our server code 
 // and simplifies the process for accepting requests and
@@ -17,10 +20,15 @@ const port = 5000;
 // Pass everything back into the server/public folder
 app.use(express.static('server/public'));
 
+// Use body-parser to properly parse request bodies
+// in the POST requests
+// Turns request body from "machine language" into
+// "human language"
+app.use(bodyParser.urlencoded({ extended: true }));
 
-let calculationsArray = [];
+// let calculationsArray = [];
 
-function addition()
+// function addition()
 
 
 // Start the server!
@@ -28,4 +36,4 @@ function addition()
 // Log message to ensure it is functioning 
 app.listen(port, () => {
     console.log('Listening on port ', port);
-});
+})
