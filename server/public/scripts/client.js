@@ -1,14 +1,25 @@
+// ** Client-Side code is JavaScript code that runs in the user's browser **
+
 $(document).ready(onReady);
 
+// * Global variable
+// these are not confined to certain functions and
+// can be used elsewhere in the program
+// Declared an operator value with an undefined value
+// This operator will be assigned a different value,
+// dependant upon which operator function is called
+let operator;
 
 function onReady() {
     // TEST: Check for onReady / DOM existence 
-    console.log('in onReady function');
+    console.log('in onReady function: 🟢');
     
     // Make a request to get the calculationsList as soon as page loads
     calculationsList();
    
     // Event listeners for the operator buttons 
+    // Each event listener asks jQuery to target the element ID and 
+    // call the subsequent function when the user interacts or triggers a click
     $('#add-button').on('click', addOperator);
     $('#subtract-button').on('click', subtractOperator);
     $('#multiply-button').on('click', multiplyOperator);
@@ -16,51 +27,52 @@ function onReady() {
     $('#equals-button').on('click', postCalculationsInputs);
 }
 
-// Global variable
-// these are not confined to certain functions and
-// can be used elsewhere in the program
-let operator;
 
-// Operator functions 
+// * Operator functions 
+// The functions below are called dependant upon the
+// user interaction triggering which operator they would like
+// The function takes the global variable and 
+// assigns a value of '+', '-', '*', '/'
+
 function addOperator() {
    // TEST: additionOperator function 
-    console.log('in addOperator function');
+    console.log('in addOperator function: 🟢');
     // Set operator value to '+'
     operator = '+';
 }
 
 function subtractOperator() {
     // TEST: subtractOperator function 
-    console.log('in subtractOperator function');
+    console.log('in subtractOperator function: 🟢');
     // Set operator value to '-'
     operator = '-';
 }
 
 function multiplyOperator() {
     // TEST: multiplyOperator function 
-    console.log('in multiplyOperator function');
+    console.log('in multiplyOperator function: 🟢');
     // Set operator value to '*'
     operator = '*';
 }
 
 function divideOperator() {
     // TEST: divideOperator function 
-    console.log('in divideOperator function');
+    console.log('in divideOperator function: 🟢');
     // Set operator value to '/'
     operator = '/';
 }
 
 
-// Function postCalculationsInputs sends user input data to the server
+// * Function postCalculationsInputs 
+// Collects user input, sends the data to the server
+// for processing and calculating logic,
+// then, updates with calculations
 function postCalculationsInputs() {
     // TEST: postCalculationsInputs function 
     console.log('in postCalculationsInputs function');
 
-    // Stopping default HTML of immediate form submission 
-    // event.preventDefault()
-
-    // Grab and store number input values and
-    // operator in an data object
+    // Grabs and stores number input values and
+    // the operator into a data object
     let inputsToPost = {
         firstValue: $('#first-value').val(),
         operator: operator,
@@ -70,7 +82,11 @@ function postCalculationsInputs() {
     // AJAX POST Method: Sends data to the server 
     $.ajax({
         method: 'POST',
+        // Route we will match on the server.js side - app.post('/calculate', (req, res) => {...
         url: '/calculate',
+        // The object we declared above that "grabs" and sends the user input for
+        // first value, operator choice, and second value
+        // This will be available as req.body on server.js side
         data: inputsToPost
 
         // .then() After sending the request, 
@@ -79,16 +95,21 @@ function postCalculationsInputs() {
         // to the client-side request.
     }).then(function(response){
 
-        // Calling the function calculationsList
+        // The function calculationsList is called and
+        // retrieves from the server the updated list of calculations (server-response)
         calculationsList();
 
-        // calling the function getAnswers to find the answer
+        // The function getAnswers is called to get the 
+        // calculation response from the server
         getAnswers();
+
     }).catch(function(error){
-        alert('error in mathTime function');
+        alert('Error sending data from calculation.');
     })
 }
 
+
+// * Function calculationsList 
 function calculationsList() {
     // TEST: Check calculationsList function 
     console.log('in calculationsList function');
