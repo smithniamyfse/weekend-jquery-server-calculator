@@ -1,4 +1,4 @@
-// Server-Side is where we create and run our server
+// ** Server-Side is where we create and run our server **
 
 // Require express - gives us a function
 const express = require('express');
@@ -26,14 +26,66 @@ app.use(express.static('server/public'));
 // "human language"
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// let calculationsArray = [];
 
-// function addition()
+// Global variable(s)
+// these are not confined to certain functions and
+// can be used elsewhere in the program
+let calculations = []; 
+let answer; 
+
+
+app.get('/calculations', (req, res) => {
+    res.send(calculations);
+})
+
+app.get('/answer', (req, res) => {
+    res.send({ answer: answer });
+})
+
+
+app.post('/calculate', (req, res) => {
+    let data = req.body;
+    let operator = data.operator;
+    let firstValue = Number(data.firstValue);
+    let secondValue = Number(data.secondValue);
+
+    switch (operator) {
+        case '+':
+            answer = firstValue + secondValue;
+            console.log(answer);
+            break;
+        case '-':
+            answer = firstValue - secondValue;
+            console.log(answer);
+            break;
+        case '*':
+            answer = firstValue * secondValue;
+            console.log(answer);
+            break;
+        case '/':
+            answer = firstValue / secondValue;
+            console.log(answer);
+            break;
+        default:
+            res.status(400).send('Bad data, please try again');
+            return;
+    }
+
+    toCalculate = {
+        firstValue: firstValue,
+        operator: operator,
+        secondValue: secondValue,
+        calculateAnswer: answer
+    };
+
+    calculations.push(toCalculate);
+    res.sendStatus(200);
+});
 
 
 // Start the server!
 // Listen for requests on port 5000
 // Log message to ensure it is functioning 
 app.listen(port, () => {
-    console.log('Listening on port ', port);
+    console.log('Listening on port:', port);
 })

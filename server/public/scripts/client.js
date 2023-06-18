@@ -1,104 +1,142 @@
 $(document).ready(onReady);
 
-// Global variable(s)
-let numberInput1;
-let numberInput2;
-let add;
-let subtract;
-let multiply;
-let divide;
 
 function onReady() {
-    // make a request to get calculations as soon as page loads
-    // TODO IS getCalculationInputs(); NECESSARY?
-    // getCalculations();
-
-    // Event listener for addition(+) button
-    $('add-button').on('click', addition);
-    // TODO addition Function
-
-    // Event listener for subtraction(-) button
-    $('subtract-button').on('click', subtraction);
-    // TODO subtraction Function
-
-    // Event listener for multiplication(*) button
-    $('multiply-button').on('click', multiplication);
-    // TODO multiplication Function 
-
-    // Event listener for division(/) button
-    $('divide-button').on('click', division);
-    // TODO division Function 
+    // TEST: Check for onReady / DOM existence 
+    console.log('in onReady function');
     
-    // Event listener for our equals(=) or submit button
-    // TODO Calls the postCalculation function that grabs the ?? 
-    // TODO number inputs what is the ?? 
-    $('#submit-button').on('click', postCalculation);
+    // Make a request to get the calculationsList as soon as page loads
+    calculationsList();
+   
+    // Event listeners for the operator buttons 
+    $('#add-button').on('click', addOperator);
+    $('#subtract-button').on('click', subtractOperator);
+    $('#multiply-button').on('click', multiplyOperator);
+    $('#divider-button').on('click', divideOperator);
+    $('#equals-button').on('click', postCalculationsInputs);
+}
 
-};
+// Global variable
+// these are not confined to certain functions and
+// can be used elsewhere in the program
+let operator;
+
+// Operator functions 
+function addOperator() {
+   // TEST: additionOperator function 
+    console.log('in addOperator function');
+    // Set operator value to '+'
+    operator = '+';
+}
+
+function subtractOperator() {
+    // TEST: subtractOperator function 
+    console.log('in subtractOperator function');
+    // Set operator value to '-'
+    operator = '-';
+}
+
+function multiplyOperator() {
+    // TEST: multiplyOperator function 
+    console.log('in multiplyOperator function');
+    // Set operator value to '*'
+    operator = '*';
+}
+
+function divideOperator() {
+    // TEST: divideOperator function 
+    console.log('in divideOperator function');
+    // Set operator value to '/'
+    operator = '/';
+}
 
 
-// ** FUNCTIONS **
-
-// Function to retrieve input data
-// TODO IS getCalculationInputs; NECESSARY?
-// Make a REQUEST to the server to get calculations
-// function getCalculations();
-
-function getCalculationInputs() {
-    // AJAX GET Method: Makes a request to server to get data 
-    $.ajax({
-        method: 'GET',
-        url: '/calculation'
-    }).then(function(response) {
-        console.log('AJAX GET getCalculationInputs', response);
-        // Render 
-        render(response);
-    }).catch(function(error) {
-        alert('Request failed :(');
-        console.log('Error from server', error);
-    })
-} // end getCalculationInputs function
-
-
-
-function postCalculationInputs(event) {
-    console.log('In postCalculations');
+// Function postCalculationsInputs sends user input data to the server
+function postCalculationsInputs() {
+    // TEST: postCalculationsInputs function 
+    console.log('in postCalculationsInputs function');
 
     // Stopping default HTML of immediate form submission 
-    event.preventDefault()
+    // event.preventDefault()
 
-    // Grab and store input values
-    numberInput1 = $('#first-value').val();
-    numberInput2 = $('#second-value').val();
-
-    // Grab operator inputs
-    add = $('#add-button').val();
-    subtract = $('#subtract-button').val();
-    multiply = $('#multiply-button').val();
-    divide = $('#divide-button').val();
+    // Grab and store number input values and
+    // operator in an data object
+    let inputsToPost = {
+        firstValue: $('#first-value').val(),
+        operator: operator,
+        secondValue: $('#second-value').val()
+    }
 
     // AJAX POST Method: Sends data to the server 
     $.ajax({
-        type: 'POST',
-        url: '/calculation',
-        data: { 
-            inputsToSend: {
-                firstValue: numberInput1,
-                secondValue: numberInput2,
-                operatorAdd: add,
-                operatorSubtract: subtract,
-                operatorMultiply: multiply,
-                operatorDivide: divide, 
-            }
-        }
-    }).then(function(response) {
-        // Call the get request
-        getCalculationInputs()
-    }).catch(function (error){
-        alert('Error in calculating.');
-        console.log(error);
-    }); 
+        method: 'POST',
+        url: '/calculate',
+        data: inputsToPost
 
-} // end postCalculationInputs function 
+        // .then() After sending the request, 
+        // the function attaches a callback function using .then(). 
+        // This callback function will be executed when the server responds successfully 
+        // to the client-side request.
+    }).then(function(response){
 
+        // Calling the function calculationsList
+        calculationsList();
+
+        // calling the function getAnswers to find the answer
+        getAnswers();
+    }).catch(function(error){
+        alert('error in mathTime function');
+    })
+}
+
+function calculationsList() {
+    // TEST: Check calculationsList function 
+    console.log('in calculationsList function');
+    $.ajax({
+        method: 'GET',
+        url: '/calculations'
+    }).then(function(response){
+        // will grab the history array and append it to the DOM
+        listOfCalculations(response);
+    }).catch(function(error){
+        alert('error in getHistory function');
+    });
+} 
+
+function getAnswers() {
+    // TEST: getAnswers function 
+    console.log('in getAnswers function');
+    $.ajax({
+        method: 'GET',
+        url: '/answer'
+    }).then(function(response){
+        answer = response.answer;
+
+        showSolutions(answer);
+    }).catch(function(error){
+        alert('error in getResults function');
+    });
+} 
+
+
+function showSolutions(data){
+    // TEST: showSolutions function 
+    console.log('in showSolutions function');
+    $('#solution').html(`
+        <h3>${data}</h3>
+    `)
+} 
+
+function listOfCalculations(array){
+    // TEST: listOfCalculations function 
+    console.log('in listOfCalculations function')
+
+    $('#list-of-calculations').empty();
+
+    for(let evaluate of array){
+        $('#list-of-calculations').append(`
+            <li>${evaluate.firstValue} ${evaluate.operator} ${evaluate.secondValue} = ${evaluate.calculateAnswer}</li>
+        `) 
+    }
+} 
 
