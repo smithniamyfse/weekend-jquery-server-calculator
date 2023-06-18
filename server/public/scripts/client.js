@@ -167,7 +167,7 @@ function getAnswers() {
 
         // The function showSolutions is called and
         // uses the solution or answer
-        // and appends to 
+        // and eventually will appends in the called showSolutions function 
         showSolutions(answer);
 
     }).catch(function(error) {

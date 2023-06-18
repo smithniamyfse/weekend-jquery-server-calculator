@@ -11,15 +11,31 @@ Build out the server-side logic to compute the numbers as appropriate. The serve
 
 # Client-Side
  Once the calculation is complete, send back the OK. You should do a GET request after the POST to get the actual calculation.
-
-[ ] - 1. Create a user interface where the user can:
-    [ ] - a. Input two values (2 input elements) 
-    [ ] - b. Select the type of mathematical operation (+, -, *, and /)
-[ ] - 2. When the submit (=) button is clicked:
-    [ ] - a. Capture this input, 
-    [ ] - b. Bundle it up in an object, and 
-    [ ] - c. Send this object to the server via a POST. 
-[ ] - 3. There should also be a 'C' button that will clear the user input fields.
+[ x ] - Preface:
+    - Sketch out and flowchart best guesses for functions, logic, etc. that would fit the purpose and action the characteristic is supposed to accomplish. 
+    - Research different ways to execute code. 
+    - Figure out global variables that will need to be used on the client.js and server.js side 
+[ x ] - 1. Create an index.html that has a user interface with a <div> container the user can:
+    [ x ] - a. Input two values (2 input elements) 
+        - The input type should be "number"
+    [ x ] - b. Select the type of mathematical operation (+, -, *, and /)
+        - Create four separate buttons for each operator sign
+        - Consider how Event Listeners and Event Handlers are going to occur on client.js
+        - Create four functions, each function should have the operator global variable assigned the operator symbol (e.g., operator = '+';)
+[ x ] - 2. When the submit (=) button is clicked:
+        - Starting with the what the output data should look like (backwards), create a function that can take in an array, loop through the calculations the server-side processed, and create an ordered list to be appended to the DOM. 
+        - Create a function that receives the data for the solution and largely displays the solution, using jQuery to call the html element. 
+        - Create an EXPRESS GET REQUEST on the server side to match with a function and AJAX GET METHOD that retrieves the list of answers from the server. This answer is called as an argument and eventually shown as the result. 
+        - Create an EXPRESS GET REQUEST on the server side to match with a function and AJAX GET METHOD for calculations. 
+    [ x ] - a. Capture this input, 
+    [ x ] - b. Bundle it up in an object, and 
+    [ x ] - c. Send this object to the server via an EXPRESS POST. Create a connecting AJAX POST route on the client. Use jQuery methodology to listen to and handle user interactions triggers and send requests for data to the server. 
+        - Assign a separate Event Handler/Function with:
+            - Declares an input object that "grabs" the input values and the operator into it - make sure to add element id's for jQuery and possible CSS customization. 
+            - Call two functions to gather the answers and list of calculations in an empty array 
+            - Add a an error alert in case there is an issue with sending data. 
+[ x ] - 3. There should also be a 'C' button that will clear the user input fields.
+[ x ] - 4. Don't forget to test through console.log and "dummy data"!
 
 ## History 
 # Server-Side
