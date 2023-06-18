@@ -1,9 +1,18 @@
-# Project Name
+# Server-Side Calculator 
 
 [Project Instructions](./INSTRUCTIONS.md), this line may be removed once you have updated the README.md
 
 ## Description
+I was responsible for building a server-side calculator. On the server, the logic for the calculator was programmed. 
 
-Your project description goes here. What problem did you solve? How did you solve it?
+Technology Used:
+- HTML
+- CSS
+- JavaScript
+    - jQuery
+    - Node
+    - Express
+    - AJAX
 
-Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
+## Capabilities  
+

@@ -1,0 +1,32 @@
+## Main Objectives ##
+Build a server-side calculator. 
+Program the logic for the computer on the server.
+
+## Required Features ##
+## Calculator
+    ** Note: Do not use eval() to complete this assignment.
+
+# Server-Side
+Build out the server-side logic to compute the numbers as appropriate. The server should be able to handle Addition, Subtraction, Multiplication, and Division.
+
+# Client-Side
+ Once the calculation is complete, send back the OK. You should do a GET request after the POST to get the actual calculation.
+
+[ ] - 1. Create a user interface where the user can:
+    [ ] - a. Input two values (2 input elements) 
+    [ ] - b. Select the type of mathematical operation (+, -, *, and /)
+[ ] - 2. When the submit (=) button is clicked:
+    [ ] - a. Capture this input, 
+    [ ] - b. Bundle it up in an object, and 
+    [ ] - c. Send this object to the server via a POST. 
+[ ] - 3. There should also be a 'C' button that will clear the user input fields.
+
+## History 
+# Server-Side
+Keep a historical record of all math operations and solutions on the server. 
+
+# Client-Side
+Display a list of all previous calculations on the page when it loads using a GET request. Update the list when a new calculation is made.
+    
+    ** NOTE: History should exist even after refreshing the page. It's expected that the history will go away after restarting the server. We'll talk about long term data storage next week.
+
